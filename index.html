@@ -28,71 +28,56 @@
       line-height: 1.6;
     }
 
-    /* === Боковые панели с функциями === */
-    .side {
+    /* === Фон с падающими функциями по всему экрану === */
+    .background-code {
       position: fixed;
       top: 0;
-      bottom: 0;
-      width: 15%;
-      overflow: hidden;
-      z-index: 0;
-      pointer-events: none;
-      font-size: 0.8rem;
-    }
-
-    .left {
       left: 0;
-      animation: floatLeft 5s ease-in-out infinite;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
     }
 
-    .right {
-      right: 0;
-      animation: floatRight 5s ease-in-out infinite;
-    }
-
-    @keyframes floatLeft {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(20px); }
-    }
-
-    @keyframes floatRight {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .side span {
+    .background-code span {
       position: absolute;
       top: -2em;
       color: var(--code-color);
       font-size: 1.2em;
-      opacity: 0.3;
-      animation: fall linear infinite;
+      opacity: 0.2;
       white-space: nowrap;
+      animation: fall linear infinite;
     }
 
     @keyframes fall {
-      0% { top: -2em; opacity: 0.3; }
+      0% { top: -2em; opacity: 0.2; }
       20% { opacity: 0.6; }
       100% { top: 100%; opacity: 0; }
     }
 
     /* === Разные скорости падения для функций === */
-    .side span:nth-child(1)   { left: 0; animation: fall 6s 0s infinite; }
-    .side span:nth-child(2)   { left: 10%; animation: fall 7s 1s infinite; }
-    .side span:nth-child(3)   { left: 20%; animation: fall 6s 2s infinite; }
-    .side span:nth-child(4)   { left: 30%; animation: fall 8s 3s infinite; }
-    .side span:nth-child(5)   { left: 40%; animation: fall 5s 4s infinite; }
-    .side span:nth-child(6)   { left: 50%; animation: fall 6s 0s infinite; }
-    .side span:nth-child(7)   { left: 60%; animation: fall 7s 1s infinite; }
-    .side span:nth-child(8)   { left: 70%; animation: fall 8s 2s infinite; }
-    .side span:nth-child(9)   { left: 80%; animation: fall 5s 3s infinite; }
-    .side span:nth-child(10)  { left: 90%; animation: fall 6s 4s infinite; }
+    .background-code span:nth-child(1)   { left: 5%; animation: fall 6s 0s infinite; }
+    .background-code span:nth-child(2)   { left: 15%; animation: fall 8s 1s infinite; }
+    .background-code span:nth-child(3)   { left: 25%; animation: fall 7s 2s infinite; }
+    .background-code span:nth-child(4)   { left: 35%; animation: fall 9s 3s infinite; }
+    .background-code span:nth-child(5)   { left: 45%; animation: fall 5s 4s infinite; }
+    .background-code span:nth-child(6)   { left: 55%; animation: fall 7s 0s infinite; }
+    .background-code span:nth-child(7)   { left: 65%; animation: fall 6s 5s infinite; }
+    .background-code span:nth-child(8)   { left: 75%; animation: fall 8s 3s infinite; }
+    .background-code span:nth-child(9)   { left: 85%; animation: fall 5s 2s infinite; }
+    .background-code span:nth-child(10)  { left: 95%; animation: fall 6s 4s infinite; }
+    .background-code span:nth-child(11)  { left: 10%; animation: fall 7s 0s infinite; }
+    .background-code span:nth-child(12)  { left: 20%; animation: fall 8s 1s infinite; }
+    .background-code span:nth-child(13)  { left: 30%; animation: fall 6s 2s infinite; }
+    .background-code span:nth-child(14)  { left: 40%; animation: fall 9s 3s infinite; }
+    .background-code span:nth-child(15)  { left: 50%; animation: fall 5s 4s infinite; }
 
     /* === Основной контент === */
     .main {
       width: 70%;
       margin: 0 auto;
-      padding: 0 15px;
+      padding: 0 20px;
       position: relative;
       z-index: 1;
     }
@@ -162,48 +147,37 @@
       transform: translateY(0);
     }
 
-    /* === Куб с левитацией (Механика) === */
-    .parallelepiped {
-      width: 60px;
-      height: 60px;
+    /* === Куб с вращением (Механика) === */
+    .cube {
+      width: 45px;
+      height: 45px;
       position: relative;
       margin: 0 auto 15px;
+      transform-style: preserve-3d;
+      animation: spin 5s linear infinite;
       perspective: 1000px;
     }
 
-    .parallelepiped-inner {
-      width: 100%;
-      height: 100%;
+    .cube-face {
       position: absolute;
-      transform-style: preserve-3d;
-      animation: spin 5s linear infinite, floatBox 3s ease-in-out infinite;
-    }
-
-    .parallelepiped-face {
-      position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
       background: var(--accent);
-      border: 1px solid #fff;
+      border: 2px solid #fff;
       opacity: 0.8;
       backface-visibility: hidden;
     }
 
-    .front  { transform: translateZ(30px); }
-    .back   { transform: rotateY(180deg) translateZ(30px); }
-    .right  { transform: rotateY(90deg) translateZ(30px); }
-    .left   { transform: rotateY(-90deg) translateZ(30px); }
-    .top    { transform: rotateX(90deg) translateZ(30px); }
-    .bottom { transform: rotateX(-90deg) translateZ(30px); }
+    .front  { transform: translateZ(22.5px); }
+    .back   { transform: rotateY(180deg) translateZ(22.5px); }
+    .right  { transform: rotateY(90deg) translateZ(22.5px); }
+    .left   { transform: rotateY(-90deg) translateZ(22.5px); }
+    .top    { transform: rotateX(90deg) translateZ(22.5px); }
+    .bottom { transform: rotateX(-90deg) translateZ(22.5px); }
 
     @keyframes spin {
       0% { transform: rotateX(0deg) rotateY(0deg); }
       100% { transform: rotateX(360deg) rotateY(360deg); }
-    }
-
-    @keyframes floatBox {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
     }
 
     /* === Лампочка (Электроника) === */
@@ -277,12 +251,8 @@
 
     /* === Адаптация под мобильные устройства === */
     @media (max-width: 768px) {
-      .side {
-        display: none;
-      }
-
       .main {
-        width: 100%;
+        width: 90%;
         margin: 0 auto;
         padding: 0 10px;
       }
@@ -308,22 +278,36 @@
         max-width: 100%;
       }
 
-      .parallelepiped {
-        width: 40px;
-        height: 40px;
+      /* === Куб на мобильных === */
+      .cube {
+        width: 30px;
+        height: 30px;
       }
 
-      .parallelepiped-face {
-        width: 40px;
-        height: 40px;
+      .cube-face {
+        width: 30px;
+        height: 30px;
+      }
+
+      .front  { transform: translateZ(15px); }
+      .back   { transform: rotateY(180deg) translateZ(15px); }
+      .right  { transform: rotateY(90deg) translateZ(15px); }
+      .left   { transform: rotateY(-90deg) translateZ(15px); }
+      .top    { transform: rotateX(90deg) translateZ(15px); }
+      .bottom { transform: rotateX(-90deg) translateZ(15px); }
+
+      /* === Функции на фоне (на мобильных) === */
+      .background-code span {
+        font-size: 1em;
+        opacity: 0.15;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Боковые панели с функциями -->
-  <div class="side left">
+  <!-- === Фон с падающими функциями Python и C++ === -->
+  <div class="background-code">
     <span>def</span>
     <span>print</span>
     <span>return</span>
@@ -334,9 +318,6 @@
     <span>if</span>
     <span>elif</span>
     <span>else</span>
-  </div>
-
-  <div class="side right">
     <span>int</span>
     <span>float</span>
     <span>void</span>
@@ -354,7 +335,7 @@
     <header class="fade-up">
       <h1>Открыт набор на курсы по мехатронике и робототехнике</h1>
       <p>Для школьников, студентов и взрослых любителей технического творчества</p>
-      <a href="tg://resolve?domain=ivanov_courses" class="btn">Записаться через Telegram</a>
+      <a href="tg://resolve?domain=jord1son" class="btn">Записаться через Telegram</a>
       <a href="https://t.me/jord1son " class="btn">Открыть в браузере</a>
     </header>
 
@@ -363,15 +344,13 @@
       <div class="features-grid">
         <div class="feature-card">
           <!-- Механика -->
-          <div class="parallelepiped">
-            <div class="parallelepiped-inner">
-              <div class="parallelepiped-face front"></div>
-              <div class="parallelepiped-face back"></div>
-              <div class="parallelepiped-face right"></div>
-              <div class="parallelepiped-face left"></div>
-              <div class="parallelepiped-face top"></div>
-              <div class="parallelepiped-face bottom"></div>
-            </div>
+          <div class="cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
           </div>
           <h3>Механика</h3>
           <p>Инженерная графика, 3D-моделирование, 3D-печать, расчёты деталей машин</p>
@@ -407,7 +386,7 @@
       <h2 style="text-align: center; margin-bottom: 20px;">Запись на курс</h2>
       <p style="text-align: center; margin-bottom: 20px;">Связаться с менеджером:</p>
       <div style="text-align: center;">
-        <a href="tg://resolve?domain=ivanov_courses" class="btn">Telegram</a>
+        <a href="tg://resolve?domain=jord1son" class="btn">Telegram</a>
         <a href="https://t.me/jord1son " class="btn">Открыть в браузере</a>
       </div>
     </section>
@@ -449,6 +428,5 @@
 
     window.addEventListener('load', typeWriter);
   </script>
-
 </body>
 </html>
