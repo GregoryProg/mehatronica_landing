@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курсы по мехатронике и робототехнике</title>
+  <style>
+    :root {
+      --bg: #0d0d1f;
+      --card-bg: #1a1a2e;
+      --accent: #00BFFF;
+      --text: white;
+      --red: #FF3B30;
+      --code-color: #00FFAA;
+      --side-bg: #0f0f25;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .side {
+      width: 20%;
+      background: var(--side-bg);
+      padding: 40px 10px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      overflow: hidden;
+      font-size: 0.8rem;
+    }
+
+    .left {
+      left: 0;
+      animation: floatLeft 5s ease-in-out infinite;
+    }
+
+    .right {
+      right: 0;
+      animation: floatRight 5s ease-in-out infinite;
+    }
+
+    @keyframes floatLeft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(20px); }
+    }
+
+    @keyframes floatRight {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .matrix {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.05;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        rgba(0, 191, 255, 0.05) 10px
+      );
+      overflow: hidden;
+    }
+
+    .matrix span {
+      position: absolute;
+      top: -1em;
+      color: var(--code-color);
+      font-size: 1.2em;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { top: -1em; opacity: 0.2; }
+      20% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .matrix span:nth-child(1) { left: 0; animation: fall 5s 0s infinite; }
+    .matrix span:nth-child(2) { left: 10%; animation: fall 7s 1s infinite; }
+    .matrix span:nth-child(3) { left: 20%; animation: fall 6s 2s infinite; }
+    .matrix span:nth-child(4) { left: 30%; animation: fall 8s 3s infinite; }
+    .matrix span:nth-child(5) { left: 40%; animation: fall 5s 4s infinite; }
+    .matrix span:nth-child(6) { left: 50%; animation: fall 6s 0s infinite; }
+    .matrix span:nth-child(7) { left: 60%; animation: fall 7s 1s infinite; }
+    .matrix span:nth-child(8) { left: 70%; animation: fall 8s 2s infinite; }
+    .matrix span:nth-child(9) { left: 80%; animation: fall 5s 3s infinite; }
+    .matrix span:nth-child(10) { left: 90%; animation: fall 6s 4s infinite; }
+
+    /* === 3D Куб в боковой панели === */
+    .side-cube {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      margin: 20px auto;
+      transform-style: preserve-3d;
+      animation: spin 6s linear infinite;
+    }
+
+    .side-cube-face {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      opacity: 0.6;
+    }
+
+    .side-cube-face.front  { transform: translateZ(20px); }
+    .side-cube-face.back   { transform: rotateY(180deg) translateZ(20px); }
+    .side-cube-face.right  { transform: rotateY(90deg) translateZ(20px); }
+    .side-cube-face.left   { transform: rotateY(-90deg) translateZ(20px); }
+    .side-cube-face.top    { transform: rotateX(90deg) translateZ(20px); }
+    .side-cube-face.bottom { transform: rotateX(-90deg) translateZ(20px); }
+
+    @keyframes spin {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    .main {
+      width: 60%;
+      margin: 0 20%;
+      padding: 0 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--bg), #111);
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+      margin: 5px;
+    }
+
+    .btn:hover {
+      background: #e62e24;
+    }
+
+    section {
+      padding: 60px 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid var(--accent);
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === 3D Куб в основном блоке === */
+    .cube {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      margin: 0 auto 15px;
+      transform-style: preserve-3d;
+      animation: spin 5s linear infinite;
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      border: 2px solid #fff;
+      opacity: 0.8;
+    }
+
+    .front  { transform: translateZ(30px); }
+    .back   { transform: rotateY(180deg) translateZ(30px); }
+    .right  { transform: rotateY(90deg) translateZ(30px); }
+    .left   { transform: rotateY(-90deg) translateZ(30px); }
+    .top    { transform: rotateX(90deg) translateZ(30px); }
+    .bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+    /* === Лампочка (Электроника) === */
+    .lightbulb {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 15px;
+      position: relative;
+    }
+
+    .bulb {
+      width: 40px;
+      height: 40px;
+      background: yellow;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      box-shadow: 0 0 20px yellow, 0 0 40px yellow;
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; box-shadow: 0 0 20px yellow, 0 0 40px yellow; }
+      100% { opacity: 0.7; box-shadow: 0 0 10px yellow, 0 0 20px yellow; }
+    }
+
+    /* === Программирование (печать кода) === */
+    .terminal {
+      width: 220px;
+      height: 60px;
+      background: #000;
+      color: var(--code-color);
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      position: relative;
+      margin: 0 auto 15px;
+      overflow: hidden;
+      white-space: pre;
+      border-radius: 5px;
+    }
+
+    .typing {
+      display: inline-block;
+      width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid var(--code-color);
+      color: var(--code-color);
+      animation: type 3s steps(40, end) forwards;
+    }
+
+    .cursor {
+      width: 10px;
+      height: 20px;
+      background: var(--code-color);
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0d0d1f;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .side-element {
+      margin-bottom: 40px;
+      padding: 10px;
+      color: rgba(255, 255, 255, 0.1);
+    }
+
+    .side-element h4 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    .terminal-code {
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: var(--code-color);
+      opacity: 0.3;
+      white-space: pre;
+    }
+
+    .terminal-code span {
+      display: block;
+      animation: code-line 2s infinite alternate;
+    }
+
+    @keyframes code-line {
+      0% { opacity: 0.3; transform: translateX(0); }
+      100% { opacity: 0.7; transform: translateX(2px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Левая боковая панель -->
+  <div class="side left">
+    <div class="matrix">
+      <span>0</span>
+      <span>1</span>
+      <span>0</span>
+      <span>1</span>
+      <span>0</span>
+      <span>1</span>
+      <span>0</span>
+      <span>1</span>
+      <span>0</span>
+      <span>1</span>
+    </div>
+
+    <div class="side-element" style="position: relative; height: 60px;">
+      <div class="side-cube">
+        <div class="side-cube-face front"></div>
+        <div class="side-cube-face back"></div>
+        <div class="side-cube-face right"></div>
+        <div class="side-cube-face left"></div>
+        <div class="side-cube-face top"></div>
+        <div class="side-cube-face bottom"></div>
+      </div>
+    </div>
+
+    <div class="side-element">
+      <h4>Системные команды</h4>
+      <div class="terminal-code">
+        <span>> sudo apt update</span>
+        <span>> python3 main.py</span>
+        <span>> npm install</span>
+        <span>> git commit -m "fix"</span>
+        <span>> blender model.blend</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Правая боковая панель -->
+  <div class="side right">
+    <div class="matrix">
+      <span>def</span>
+      <span>class</span>
+      <span>import</span>
+      <span>while</span>
+      <span>for</span>
+      <span>return</span>
+      <span>print</span>
+      <span>void</span>
+      <span>loop</span>
+      <span>var</span>
+    </div>
+
+    <div class="side-element">
+      <h4>3D Wireframe</h4>
+      <div style="width: 100%; height: 100px; background: repeating-linear-gradient(45deg, transparent, rgba(0, 191, 255, 0.05) 10px); border: 1px solid rgba(0, 191, 255, 0.2); border-radius: 5px;"></div>
+    </div>
+
+    <div class="side-element">
+      <h4>Код</h4>
+      <div class="terminal-code">
+        <span>for i in range(10):</span>
+        <span>    print("Hello")</span>
+        <span>if i == 9:</span>
+        <span>    break</span>
+        <span>return 0;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Основной контент -->
+  <div class="main">
+    <header class="fade-up">
+      <h1>Открыт набор на курсы по мехатронике и робототехнике</h1>
+      <p>Для школьников, студентов и взрослых любителей технического творчества</p>
+      <a href="tg://resolve?domain=ivanov_courses" class="btn">Записаться через Telegram</a>
+      <a href="https://t.me/ivanov_courses " class="btn">Открыть в браузере</a>
+    </header>
+
+    <section class="fade-up">
+      <h2 style="text-align: center; margin-bottom: 40px;">Что включает курс</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
+          </div>
+          <h3>Механика</h3>
+          <p>Инженерная графика, 3D-моделирование, 3D-печать, расчёты деталей машин</p>
+        </div>
+        <div class="feature-card">
+          <div class="lightbulb">
+            <div class="bulb"></div>
+          </div>
+          <h3>Электроника</h3>
+          <p>Основы электротехники, датчики, пайка, работа с современными компонентами</p>
+        </div>
+        <div class="feature-card">
+          <div class="terminal">
+            <div class="typing">print("Hello, World!")</div>
+            <div class="cursor"></div>
+          </div>
+          <h3>Программирование</h3>
+          <p>Языки C++, Python, программирование контроллеров, сбор данных с датчиков</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade-up">
+      <h2 style="text-align: center; margin-bottom: 20px;">Дополнительно</h2>
+      <p style="max-width: 800px; margin: 0 auto;">
+        Участие в конкурсах и соревнованиях, с возможностью побороться за дополнительные баллы к ЕГЭ.
+      </p>
+    </section>
+
+    <section class="fade-up contacts">
+      <h2 style="text-align: center; margin-bottom: 20px;">Запись на курс</h2>
+      <p style="text-align: center; margin-bottom: 20px;">Связаться с менеджером:</p>
+      <div style="text-align: center;">
+        <a href="tg://resolve?domain=ivanov_courses" class="btn">Telegram</a>
+        <a href="https://t.me/ivanov_courses " class="btn">Открыть в браузере</a>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 | Все права защищены
+    </footer>
+  </div>
+
+  <script>
+    // Анимация по скроллу (нативная)
+    const sections = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
