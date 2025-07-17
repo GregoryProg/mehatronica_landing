@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Курсы по мехатронике и робототехнике</title>
   <style>
     :root {
@@ -26,23 +26,17 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      overflow-x: hidden;
     }
 
-    .container {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-    }
-
+    /* === Боковые панели с функциями === */
     .side {
-      width: 20%;
-      background: var(--side-bg);
-      padding: 40px 10px;
       position: fixed;
       top: 0;
       bottom: 0;
+      width: 15%;
       overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
       font-size: 0.8rem;
     }
 
@@ -66,81 +60,41 @@
       50% { transform: translateY(-20px); }
     }
 
-    .matrix {
+    .side span {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.05;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        rgba(0, 191, 255, 0.05) 10px
-      );
-      overflow: hidden;
-    }
-
-    .matrix span {
-      position: absolute;
-      top: -1em;
+      top: -2em;
       color: var(--code-color);
       font-size: 1.2em;
+      opacity: 0.3;
       animation: fall linear infinite;
+      white-space: nowrap;
     }
 
     @keyframes fall {
-      0% { top: -1em; opacity: 0.2; }
-      20% { opacity: 1; }
+      0% { top: -2em; opacity: 0.3; }
+      20% { opacity: 0.6; }
       100% { top: 100%; opacity: 0; }
     }
 
-    .matrix span:nth-child(1) { left: 0; animation: fall 5s 0s infinite; }
-    .matrix span:nth-child(2) { left: 10%; animation: fall 7s 1s infinite; }
-    .matrix span:nth-child(3) { left: 20%; animation: fall 6s 2s infinite; }
-    .matrix span:nth-child(4) { left: 30%; animation: fall 8s 3s infinite; }
-    .matrix span:nth-child(5) { left: 40%; animation: fall 5s 4s infinite; }
-    .matrix span:nth-child(6) { left: 50%; animation: fall 6s 0s infinite; }
-    .matrix span:nth-child(7) { left: 60%; animation: fall 7s 1s infinite; }
-    .matrix span:nth-child(8) { left: 70%; animation: fall 8s 2s infinite; }
-    .matrix span:nth-child(9) { left: 80%; animation: fall 5s 3s infinite; }
-    .matrix span:nth-child(10) { left: 90%; animation: fall 6s 4s infinite; }
+    /* === Разные скорости падения для функций === */
+    .side span:nth-child(1)   { left: 0; animation: fall 6s 0s infinite; }
+    .side span:nth-child(2)   { left: 10%; animation: fall 7s 1s infinite; }
+    .side span:nth-child(3)   { left: 20%; animation: fall 6s 2s infinite; }
+    .side span:nth-child(4)   { left: 30%; animation: fall 8s 3s infinite; }
+    .side span:nth-child(5)   { left: 40%; animation: fall 5s 4s infinite; }
+    .side span:nth-child(6)   { left: 50%; animation: fall 6s 0s infinite; }
+    .side span:nth-child(7)   { left: 60%; animation: fall 7s 1s infinite; }
+    .side span:nth-child(8)   { left: 70%; animation: fall 8s 2s infinite; }
+    .side span:nth-child(9)   { left: 80%; animation: fall 5s 3s infinite; }
+    .side span:nth-child(10)  { left: 90%; animation: fall 6s 4s infinite; }
 
-    .side-cube {
-      width: 40px;
-      height: 40px;
-      position: relative;
-      margin: 20px auto;
-      transform-style: preserve-3d;
-      animation: spin 6s linear infinite;
-    }
-
-    .side-cube-face {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: var(--accent);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      opacity: 0.6;
-    }
-
-    .side-cube-face.front  { transform: translateZ(20px); }
-    .side-cube-face.back   { transform: rotateY(180deg) translateZ(20px); }
-    .side-cube-face.right  { transform: rotateY(90deg) translateZ(20px); }
-    .side-cube-face.left   { transform: rotateY(-90deg) translateZ(20px); }
-    .side-cube-face.top    { transform: rotateX(90deg) translateZ(20px); }
-    .side-cube-face.bottom { transform: rotateX(-90deg) translateZ(20px); }
-
-    @keyframes spin {
-      0% { transform: rotateX(0deg) rotateY(0deg); }
-      100% { transform: rotateX(360deg) rotateY(360deg); }
-    }
-
+    /* === Основной контент === */
     .main {
-      width: 60%;
-      margin: 0 20%;
-      padding: 0 20px;
+      width: 70%;
+      margin: 0 auto;
+      padding: 0 15px;
+      position: relative;
+      z-index: 1;
     }
 
     header {
@@ -171,7 +125,6 @@
       font-size: 1rem;
       transition: background 0.3s;
       margin: 5px;
-      text-align: center;
     }
 
     .btn:hover {
@@ -209,22 +162,31 @@
       transform: translateY(0);
     }
 
-    .cube {
+    /* === Куб с левитацией (Механика) === */
+    .parallelepiped {
       width: 60px;
       height: 60px;
       position: relative;
       margin: 0 auto 15px;
-      transform-style: preserve-3d;
-      animation: spin 5s linear infinite;
+      perspective: 1000px;
     }
 
-    .cube-face {
+    .parallelepiped-inner {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: spin 5s linear infinite, floatBox 3s ease-in-out infinite;
+    }
+
+    .parallelepiped-face {
       position: absolute;
       width: 60px;
       height: 60px;
       background: var(--accent);
-      border: 2px solid #fff;
+      border: 1px solid #fff;
       opacity: 0.8;
+      backface-visibility: hidden;
     }
 
     .front  { transform: translateZ(30px); }
@@ -239,6 +201,12 @@
       100% { transform: rotateX(360deg) rotateY(360deg); }
     }
 
+    @keyframes floatBox {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* === Лампочка (Электроника) === */
     .lightbulb {
       width: 60px;
       height: 60px;
@@ -263,9 +231,9 @@
       100% { opacity: 0.7; box-shadow: 0 0 10px yellow, 0 0 20px yellow; }
     }
 
+    /* === Терминал с посимвольной печатью === */
     .terminal {
-      width: 100%;
-      max-width: 220px;
+      width: 220px;
       height: 60px;
       background: #000;
       color: var(--code-color);
@@ -275,18 +243,13 @@
       position: relative;
       margin: 0 auto 15px;
       overflow: hidden;
-      white-space: pre;
-      border-radius: 5px;
     }
 
     .typing {
-      display: inline-block;
-      width: 0;
       white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid var(--code-color);
+      display: inline-block;
+      min-width: 200px;
       color: var(--code-color);
-      animation: type 3s steps(40, end) forwards;
     }
 
     .cursor {
@@ -304,11 +267,6 @@
       100% { opacity: 0; }
     }
 
-    @keyframes type {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -317,42 +275,8 @@
       color: #aaa;
     }
 
-    .side-element {
-      margin-bottom: 30px;
-      padding: 10px;
-      color: rgba(255, 255, 255, 0.1);
-    }
-
-    .side-element h4 {
-      color: var(--accent);
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-    }
-
-    .terminal-code {
-      font-family: monospace;
-      font-size: 0.7rem;
-      color: var(--code-color);
-      opacity: 0.3;
-      white-space: pre;
-    }
-
-    .terminal-code span {
-      display: block;
-      animation: code-line 2s infinite alternate;
-    }
-
-    @keyframes code-line {
-      0% { opacity: 0.3; transform: translateX(0); }
-      100% { opacity: 0.7; transform: translateX(2px); }
-    }
-
     /* === Адаптация под мобильные устройства === */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
       .side {
         display: none;
       }
@@ -384,89 +308,45 @@
         max-width: 100%;
       }
 
-      .cube {
+      .parallelepiped {
         width: 40px;
         height: 40px;
       }
 
-      .cube-face {
+      .parallelepiped-face {
         width: 40px;
         height: 40px;
-      }
-
-      .terminal-code {
-        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Боковые панели (скрываются на мобильных) -->
+  <!-- Боковые панели с функциями -->
   <div class="side left">
-    <div class="matrix">
-      <span>0</span>
-      <span>1</span>
-      <span>0</span>
-      <span>1</span>
-      <span>0</span>
-      <span>1</span>
-      <span>0</span>
-      <span>1</span>
-      <span>0</span>
-      <span>1</span>
-    </div>
-    <div class="side-element" style="position: relative; height: 60px;">
-      <div class="side-cube">
-        <div class="side-cube-face front"></div>
-        <div class="side-cube-face back"></div>
-        <div class="side-cube-face right"></div>
-        <div class="side-cube-face left"></div>
-        <div class="side-cube-face top"></div>
-        <div class="side-cube-face bottom"></div>
-      </div>
-    </div>
-    <div class="side-element">
-      <h4>Системные команды</h4>
-      <div class="terminal-code">
-        <span>> sudo apt update</span>
-        <span>> python3 main.py</span>
-        <span>> npm install</span>
-        <span>> git commit -m "fix"</span>
-        <span>> blender model.blend</span>
-      </div>
-    </div>
+    <span>def</span>
+    <span>print</span>
+    <span>return</span>
+    <span>while</span>
+    <span>for</span>
+    <span>import</span>
+    <span>class</span>
+    <span>if</span>
+    <span>elif</span>
+    <span>else</span>
   </div>
 
   <div class="side right">
-    <div class="matrix">
-      <span>def</span>
-      <span>class</span>
-      <span>import</span>
-      <span>while</span>
-      <span>for</span>
-      <span>return</span>
-      <span>print</span>
-      <span>void</span>
-      <span>loop</span>
-      <span>var</span>
-    </div>
-
-    <div class="side-element">
-      <h4>3D Wireframe</h4>
-      <div style="width: 100%; height: 100px; background: repeating-linear-gradient(45deg, transparent, rgba(0, 191, 255, 0.05) 10px); border: 1px solid rgba(0, 191, 255, 0.2); border-radius: 5px;"></div>
-    </div>
-
-    <div class="side-element">
-      <h4>Код</h4>
-      <div class="terminal-code">
-        <span>for i in range(10):</span>
-        <span>    print("Hello")</span>
-        <span>if i == 9:</span>
-        <span>    break</span>
-        <span>return 0;</span>
-      </div>
-    </div>
+    <span>int</span>
+    <span>float</span>
+    <span>void</span>
+    <span>main()</span>
+    <span>std::</span>
+    <span>cout</span>
+    <span>cin</span>
+    <span>loop</span>
+    <span>function</span>
+    <span>namespace</span>
   </div>
 
   <!-- Основной контент -->
@@ -474,7 +354,7 @@
     <header class="fade-up">
       <h1>Открыт набор на курсы по мехатронике и робототехнике</h1>
       <p>Для школьников, студентов и взрослых любителей технического творчества</p>
-      <a href="tg://resolve?domain=jord1son" class="btn">Записаться через Telegram</a>
+      <a href="tg://resolve?domain=ivanov_courses" class="btn">Записаться через Telegram</a>
       <a href="https://t.me/jord1son " class="btn">Открыть в браузере</a>
     </header>
 
@@ -482,27 +362,32 @@
       <h2 style="text-align: center; margin-bottom: 30px;">Что включает курс</h2>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="cube">
-            <div class="cube-face front"></div>
-            <div class="cube-face back"></div>
-            <div class="cube-face right"></div>
-            <div class="cube-face left"></div>
-            <div class="cube-face top"></div>
-            <div class="cube-face bottom"></div>
+          <!-- Механика -->
+          <div class="parallelepiped">
+            <div class="parallelepiped-inner">
+              <div class="parallelepiped-face front"></div>
+              <div class="parallelepiped-face back"></div>
+              <div class="parallelepiped-face right"></div>
+              <div class="parallelepiped-face left"></div>
+              <div class="parallelepiped-face top"></div>
+              <div class="parallelepiped-face bottom"></div>
+            </div>
           </div>
           <h3>Механика</h3>
           <p>Инженерная графика, 3D-моделирование, 3D-печать, расчёты деталей машин</p>
         </div>
         <div class="feature-card">
+          <!-- Электроника -->
           <div class="lightbulb">
             <div class="bulb"></div>
           </div>
           <h3>Электроника</h3>
-          <p>Основы электротехники, датчики, пайка, работа с современными компонентами</p>
+          <p>Основы электротехники, датчики, пайка, работа с компонентами</p>
         </div>
         <div class="feature-card">
+          <!-- Программирование -->
           <div class="terminal">
-            <div class="typing">print("Hello, World!")</div>
+            <div class="typing" id="terminal-text"></div>
             <div class="cursor"></div>
           </div>
           <h3>Программирование</h3>
@@ -533,7 +418,7 @@
   </div>
 
   <script>
-    // Анимация по скроллу (нативная)
+    // Анимация по скроллу
     const sections = document.querySelectorAll('.fade-up');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -548,6 +433,21 @@
     sections.forEach(section => {
       observer.observe(section);
     });
+
+    // Посимвольная печать в терминале
+    const terminal = document.getElementById('terminal-text');
+    const fullText = 'print("Hello, World!")';
+    let index = 0;
+
+    function typeWriter() {
+      if (index < fullText.length) {
+        terminal.textContent += fullText.charAt(index);
+        index++;
+        setTimeout(typeWriter, 100); // Скорость печати
+      }
+    }
+
+    window.addEventListener('load', typeWriter);
   </script>
 
 </body>
