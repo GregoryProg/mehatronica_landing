@@ -31,6 +31,7 @@
 
     .container {
       display: flex;
+      flex-direction: row;
       min-height: 100vh;
     }
 
@@ -106,7 +107,6 @@
     .matrix span:nth-child(9) { left: 80%; animation: fall 5s 3s infinite; }
     .matrix span:nth-child(10) { left: 90%; animation: fall 6s 4s infinite; }
 
-    /* === 3D Куб в боковой панели === */
     .side-cube {
       width: 40px;
       height: 40px;
@@ -145,19 +145,19 @@
 
     header {
       background: linear-gradient(135deg, var(--bg), #111);
-      padding: 80px 20px;
+      padding: 60px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: 2rem;
+      margin-bottom: 15px;
     }
 
     header p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto 30px;
+      font-size: 1rem;
+      max-width: 100%;
+      margin: 0 auto 20px;
     }
 
     .btn {
@@ -171,6 +171,7 @@
       font-size: 1rem;
       transition: background 0.3s;
       margin: 5px;
+      text-align: center;
     }
 
     .btn:hover {
@@ -178,20 +179,20 @@
     }
 
     section {
-      padding: 60px 20px;
+      padding: 40px 20px;
     }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+      gap: 20px;
       max-width: 1000px;
       margin: 0 auto;
     }
 
     .feature-card {
       background: #111;
-      padding: 20px;
+      padding: 15px;
       border-radius: 10px;
       text-align: center;
       border: 1px solid var(--accent);
@@ -208,7 +209,6 @@
       transform: translateY(0);
     }
 
-    /* === 3D Куб в основном блоке === */
     .cube {
       width: 60px;
       height: 60px;
@@ -234,7 +234,11 @@
     .top    { transform: rotateX(90deg) translateZ(30px); }
     .bottom { transform: rotateX(-90deg) translateZ(30px); }
 
-    /* === Лампочка (Электроника) === */
+    @keyframes spin {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
     .lightbulb {
       width: 60px;
       height: 60px;
@@ -259,9 +263,9 @@
       100% { opacity: 0.7; box-shadow: 0 0 10px yellow, 0 0 20px yellow; }
     }
 
-    /* === Программирование (печать кода) === */
     .terminal {
-      width: 220px;
+      width: 100%;
+      max-width: 220px;
       height: 60px;
       background: #000;
       color: var(--code-color);
@@ -314,7 +318,7 @@
     }
 
     .side-element {
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       padding: 10px;
       color: rgba(255, 255, 255, 0.1);
     }
@@ -342,11 +346,63 @@
       0% { opacity: 0.3; transform: translateX(0); }
       100% { opacity: 0.7; transform: translateX(2px); }
     }
+
+    /* === Адаптация под мобильные устройства === */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .side {
+        display: none;
+      }
+
+      .main {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 10px;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      header p {
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .terminal {
+        max-width: 100%;
+      }
+
+      .cube {
+        width: 40px;
+        height: 40px;
+      }
+
+      .cube-face {
+        width: 40px;
+        height: 40px;
+      }
+
+      .terminal-code {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Левая боковая панель -->
+  <!-- Боковые панели (скрываются на мобильных) -->
   <div class="side left">
     <div class="matrix">
       <span>0</span>
@@ -360,7 +416,6 @@
       <span>0</span>
       <span>1</span>
     </div>
-
     <div class="side-element" style="position: relative; height: 60px;">
       <div class="side-cube">
         <div class="side-cube-face front"></div>
@@ -371,7 +426,6 @@
         <div class="side-cube-face bottom"></div>
       </div>
     </div>
-
     <div class="side-element">
       <h4>Системные команды</h4>
       <div class="terminal-code">
@@ -384,7 +438,6 @@
     </div>
   </div>
 
-  <!-- Правая боковая панель -->
   <div class="side right">
     <div class="matrix">
       <span>def</span>
@@ -421,12 +474,12 @@
     <header class="fade-up">
       <h1>Открыт набор на курсы по мехатронике и робототехнике</h1>
       <p>Для школьников, студентов и взрослых любителей технического творчества</p>
-      <a href="tg://resolve?domain=ivanov_courses" class="btn">Записаться через Telegram</a>
-      <a href="https://t.me/ivanov_courses " class="btn">Открыть в браузере</a>
+      <a href="tg://resolve?domain=jord1son" class="btn">Записаться через Telegram</a>
+      <a href="https://t.me/jord1son " class="btn">Открыть в браузере</a>
     </header>
 
     <section class="fade-up">
-      <h2 style="text-align: center; margin-bottom: 40px;">Что включает курс</h2>
+      <h2 style="text-align: center; margin-bottom: 30px;">Что включает курс</h2>
       <div class="features-grid">
         <div class="feature-card">
           <div class="cube">
@@ -470,7 +523,7 @@
       <p style="text-align: center; margin-bottom: 20px;">Связаться с менеджером:</p>
       <div style="text-align: center;">
         <a href="tg://resolve?domain=ivanov_courses" class="btn">Telegram</a>
-        <a href="https://t.me/ivanov_courses " class="btn">Открыть в браузере</a>
+        <a href="https://t.me/jord1son " class="btn">Открыть в браузере</a>
       </div>
     </section>
 
