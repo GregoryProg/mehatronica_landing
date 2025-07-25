@@ -259,10 +259,9 @@
     /* === Раздел с роботами === */
     .robot-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 30px;
+    grid-template-columns: repeat(2, 1fr); /* Всегда 2 колонки на ПК */
+    gap: 20px;
+    margin-top: 30px;
     }
 
     .robot-card {
@@ -353,11 +352,11 @@
       }
 
       .robot-img-wrapper {
-        height: 150px;
+        height: 180px;
       }
 
       .robot-caption {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
       }
     }
   </style>
